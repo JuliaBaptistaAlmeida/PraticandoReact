@@ -2,17 +2,15 @@ import type { FormEvent } from "react";
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../shared/layout/Login.module.css";
-
-type LoginProps = {
-  onLogin: (username: string) => void;
-};
+import { useAuth } from "../shared/auth/AuthContext";
 
 const VALID_USER = "admin";
 const VALID_PASS = "123";
 
-export function Login({ onLogin }: LoginProps) {
+export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +28,7 @@ export function Login({ onLogin }: LoginProps) {
     const p = password;
 
     if (u === VALID_USER && p === VALID_PASS) {
-      onLogin(u);
+      login(u);
       const redirectTo =
         (location.state as { from?: string } | null)?.from || "/";
       navigate(redirectTo, { replace: true });
@@ -86,4 +84,3 @@ export function Login({ onLogin }: LoginProps) {
     </div>
   );
 }
-
