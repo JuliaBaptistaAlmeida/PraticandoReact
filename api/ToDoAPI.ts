@@ -3,7 +3,7 @@ import axios from 'axios';
 const axiosinstance = axios.create({});
 
 interface IToDo {
-    id: number;
+    id: string | number;
     title: string;
     completed: boolean;
 }
@@ -13,6 +13,7 @@ interface IToDoWithoutID {
     completed: boolean;
 }
 
+// Chamando os endpoints da API
 export const ToDoAPI = {
     // Pegar todas
     async getAll() {
@@ -23,7 +24,6 @@ export const ToDoAPI = {
     // Criar
     async create(data: IToDoWithoutID) {
         const response = await axiosinstance.post('/api/to_dos', data);
-        console.log("CREATE RESPONSE:", response.data);
         return response.data.toDos as IToDo;
     },
 
